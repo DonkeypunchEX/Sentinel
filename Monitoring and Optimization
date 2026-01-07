@@ -1,0 +1,67 @@
+# monitor_tulpa.py
+import psutil
+import logging
+from datetime import datetime
+
+class TulpaMonitor:
+    def __init__(self):
+        self.log_file = "tulpa_monitor.log"
+        logging.basicConfig(
+            filename=self.log_file,
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s'
+        )
+        
+    def check_resources(self):
+        """Monitor and log resource usage"""
+        cpu_percent = psutil.cpu_percent(interval=1)
+        memory = psutil.virtual_memory()
+        temp = self.get_cpu_temp()
+        
+        log_entry = (
+            f"CPU: {cpu_percent}% | "
+            f"Memory: {memory.percent}% | "
+            f"Temp: {temp}°C"
+        )
+        
+        logging.info(log_entry)
+        
+        # Alert if thresholds exceeded
+        if cpu_percent > 85:
+            self.throttle_ollama()
+        if memory.percent > 90:
+            self.clear_cache()
+            
+    def get_cpu_temp(self):
+        """Get Raspberry Pi CPU temperature"""
+        try:
+            with open('/sys/class/thermal/thermal_zone0/temp', 'r') as f:
+                temp = int(f.read()) / 1000.0
+            return temp
+        except:
+            return 0
+            
+    def throttle_ollama(self):
+        """Dynamically adjust Ollama parameters"""
+        import subprocess
+        subprocess.run([
+            "ollama", "run", "tinydolphin:1.1b",
+            "--numa", "--num-threads", "2"
+        ])
+
+# Performance optimization config
+ollama_config = """
+# ~/.ollama/config.json
+{
+  "num_parallel": 1,
+  "num_keep_alive": 1,
+  "num_predict": 512,
+  "temperature": 0.7,
+  "top_k": 40,
+  "top_p": 0.9,
+  "repeat_penalty": 1.1,
+  "mirostat": 2,
+  "mirostat_tau": 5.0,
+  "mirostat_eta": 0.1
+}
+"""
