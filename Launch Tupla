@@ -1,0 +1,8 @@
+# Start as background service
+sudo systemctl start tulpa
+
+# Or run manually
+python3 enhanced_rag_tulpa.py
+
+# Access web dashboard
+http://raspberrypi.local:5000
