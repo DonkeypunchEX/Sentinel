@@ -1,0 +1,11 @@
+# Check service status
+sudo systemctl status tulpa
+
+# View logs
+journalctl -u tulpa -f
+
+# Resource monitoring
+python3 src/system/monitor.py --dashboard
+
+# Database health
+python3 src/rag/check_database.py
