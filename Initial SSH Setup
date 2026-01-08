@@ -1,0 +1,9 @@
+ssh pi@raspberrypi.local  # Default password: raspberry
+
+# Clone this repository
+git clone https://github.com/yourusername/tulpa-ai.git
+cd tulpa-ai
+
+# Run the setup script
+chmod +x setup.sh
+./setup.sh
