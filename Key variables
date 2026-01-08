@@ -1,0 +1,18 @@
+# Model Selection
+OLLAMA_MODEL=tinydolphin:1.1b-q4_K_M
+EMBEDDING_MODEL=all-MiniLM-L6-v2
+
+# Voice Settings
+WAKE_WORD="hey tulpa"
+LANGUAGE=en
+VOICE_ENABLED=true
+
+# System Performance
+MAX_CONTEXT_LENGTH=2048
+BATCH_SIZE=1
+TEMPERATURE=0.7
+
+# Paths
+PROTOCOLS_DIR=/home/pi/tulpa-ai/protocols
+MODELS_DIR=/home/pi/tulpa-ai/models
+LOG_DIR=/var/log/tulpa
