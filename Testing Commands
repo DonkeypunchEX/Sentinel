@@ -1,0 +1,10 @@
+# Test basic functionality
+curl -X POST http://localhost:5000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"query":"Synthesize Hemi-Sync + Blueprint stack"}'
+
+# Monitor system
+watch -n 5 python3 monitor_tulpa.py
+
+# Check logs
+journalctl -u tulpa.service -f
