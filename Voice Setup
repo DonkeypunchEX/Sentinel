@@ -1,0 +1,9 @@
+# Test microphone
+arecord -l
+
+# Configure audio
+sudo raspi-config
+# Select: System Options > Audio > 3.5mm jack
+
+# Test voice recognition
+python3 src/voice/test_voice.py
