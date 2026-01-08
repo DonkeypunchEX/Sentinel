@@ -1,0 +1,8 @@
+# Backup protocols and models
+./scripts/backup_protocols.sh
+
+# Restore from backup
+./scripts/restore_backup.sh /path/to/backup.tar.gz
+
+# Reset system
+./scripts/reset_system.sh --keep-protocols
