@@ -1,0 +1,24 @@
+# web_dashboard.py
+from flask import Flask, render_template, jsonify
+import json
+
+app = Flask(__name__)
+
+@app.route('/')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/api/status')
+def api_status():
+    return jsonify({
+        'ollama_running': check_ollama(),
+        'models_loaded': get_loaded_models(),
+        'rag_docs_count': count_rag_documents(),
+        'system_health': get_system_health()
+    })
+
+@app.route('/api/query', methods=['POST'])
+def query():
+    data = request.json
+    response = rag_system.query(data['query'])
+    return jsonify(response)
