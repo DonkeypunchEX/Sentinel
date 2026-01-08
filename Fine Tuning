@@ -1,0 +1,16 @@
+# Prepare training data
+python3 src/llm/prepare_training.py
+
+# Run fine-tuning (requires Google Colab or local GPU)
+python3 src/llm/fine_tuning.py \
+  --base_model microsoft/phi-2 \
+  --dataset protocols/training.json \
+  --output_dir models/fine_tuned \
+  --epochs 3 \
+  --lora_r 8
+
+# Convert to GGUF format
+python3 src/llm/convert_to_gguf.py \
+  --input models/fine_tuned \
+  --output models/fine_tuned/phi2-protocols.gguf \
+  --quantization q4_K_M
